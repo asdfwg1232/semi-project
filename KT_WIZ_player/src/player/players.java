@@ -8,9 +8,9 @@ public class players {
 	private int hr; // 홈런
 	
 	//기본생성자, 생성자
-	public Player() {}
+	public players() {}
 	
-	public Player(String name, double ba, int atbat, int gamenum, int hr) {
+	public players(String name, double ba, int atbat, int gamenum, int hr) {
 		super();
 		this.name = name;
 		this.ba = ba;
