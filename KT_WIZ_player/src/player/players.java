@@ -1,6 +1,6 @@
 package player;
 
-public class players {
+public class Players {
 	private String name; //이름
 	private double ba; //타율
 	private int atbat; //타석
@@ -8,9 +8,9 @@ public class players {
 	private int hr; // 홈런
 	
 	//기본생성자, 생성자
-	public players() {}
+	public Players() {}
 	
-	public players(String name, double ba, int atbat, int gamenum, int hr) {
+	public Players(String name, double ba, int atbat, int gamenum, int hr) {
 		super();
 		this.name = name;
 		this.ba = ba;
