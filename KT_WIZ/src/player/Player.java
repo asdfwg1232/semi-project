@@ -2,6 +2,7 @@ package player;
 
 public class Player {
 	
+        private String name; //이름
 	private int salary; // 연봉
 	private int deposit ; // 계약금
 	private int year ; //xx년생
@@ -12,14 +13,23 @@ public class Player {
 	//생성자 / 기본생성자 / getter setter / to string
 	public Player() {}
 
-	public Player(int salary, int deposit, int year, int number, Pitcher pitcher, Batter batter) {
+	public Player(String name, int salary, int deposit, int year, int number, Pitcher pitcher, Batter batter) {
 		super();
+		this.name = name;
 		this.salary = salary;
 		this.deposit = deposit;
 		this.year = year;
 		this.number = number;
 		this.pitcher = pitcher;
 		this.batter = batter;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getSalary() {
@@ -72,8 +82,8 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player [salary=" + salary + ", deposit=" + deposit + ", year=" + year + ", number=" + number
-				+ ", pitcher=" + pitcher + ", batter=" + batter + "]";
+		return "Player [name=" + name + ", salary=" + salary + ", deposit=" + deposit + ", year=" + year + ", number="
+				+ number + ", pitcher=" + pitcher + ", batter=" + batter + "]";
 	}
 	
 	
