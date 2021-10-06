@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `batter`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `batter` (
-  `number` int NOT NULL,
   `name` varchar(45) NOT NULL,
   `salary` int NOT NULL,
   `deposit` int NOT NULL,
   `position` varchar(45) NOT NULL,
+  `number` int NOT NULL,
   `avg` double NOT NULL,
   `hr` int NOT NULL,
   `sb` int NOT NULL,
