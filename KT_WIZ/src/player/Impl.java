@@ -1,4 +1,3 @@
-package BaseBall;
 
 import java.sql.Array;
 import java.sql.Connection;
@@ -16,20 +15,16 @@ public class PlayerDaoImpl implements PlayerDao {
 		return instance;
 	}
 
-	
-	public List<PlayerDto_batter> playerFindByAvgOrderBy(String columnName, String ans) throws ClassNotFoundException, SQLException {
-		String sql = "select * from batter order where ? ? by avg desc limit 10";
+	//타자 타율 10명 좋은 사람 고르기
+	public List<Batterplayer> playerFindByAvgOrderBy() throws ClassNotFoundException, SQLException {
+		String sql = "select * from batter order by avg desc limit 10";
 			try(Connection conn = PlayerConn.getConn2021();
-					PreparedStatement pst = conn.prepareStatement(sql)){	
-				
-				pst.setString(1, columnName);
-				pst.setString(2, ans);
-				
+					PreparedStatement pst = conn.prepareStatement(sql)){				
 				try(ResultSet rs = pst.executeQuery()){
 					
-					List<PlayerDto_batter> plaList = new ArrayList<PlayerDto_batter>();
+					List<Batterplayer> plaList = new ArrayList<Batterplayer>();
 					while(rs.next()) {
-						plaList.add(new PlayerDto_batter(
+						plaList.add(new Batterplayer(
 								rs.getString("name"),
 								rs.getInt("salary"),
 								rs.getInt("deposit"),
@@ -43,22 +38,18 @@ public class PlayerDaoImpl implements PlayerDao {
 				}
 			}
 		}
-
+	
+    //투수 평자 좋은 10명 정렬하기
 	@Override
-	public List<PlayerDto_pitcher> playerFindByEraOrderBy(String columnName, String ans)
-			throws ClassNotFoundException, SQLException {
-		String sql = "select * from pitcher order where ? ? by avg desc limit 10";
+	public List<Pitcherplayer> playerFindByEraOrderBy() throws ClassNotFoundException, SQLException {
+		String sql = "select * from pitcher order by era desc limit 10";
 		try(Connection conn = PlayerConn.getConn2021();
-				PreparedStatement pst = conn.prepareStatement(sql)){	
-			
-			pst.setString(1, columnName);
-			pst.setString(2, ans);
-			
+				PreparedStatement pst = conn.prepareStatement(sql)){					
 			try(ResultSet rs = pst.executeQuery()){
 				
-				List<PlayerDto_pitcher> plaList = new ArrayList<PlayerDto_pitcher>();
+				List<Pitcherplayer> plaList = new ArrayList<Pitcherplayer>();
 				while(rs.next()) {
-					plaList.add(new PlayerDto_pitcher(
+					plaList.add(new Pitcherplayer(
 							rs.getString("name"),
 							rs.getInt("salary"),
 							rs.getInt("deposit"),
@@ -75,10 +66,10 @@ public class PlayerDaoImpl implements PlayerDao {
 		}
 	}
 
-
+    //타자 입력 받은 타율 보다 타율이 좋은 선수에 기본 급여에 + 얼마할지 
 	@Override
-	public int update_batter(PlayerDto_batter player) throws ClassNotFoundException, SQLException {
-		String sql = "update batter set salary = salary+? where avg <= ?";
+	public int update_batter(Batterplayer player) throws ClassNotFoundException, SQLException {
+		String sql = "update batter set salary = salary+? where avg >= ?";
 		try(Connection conn = PlayerConn.getConn2021();
 			PreparedStatement pst = conn.prepareStatement(sql)){
 			
@@ -89,10 +80,11 @@ public class PlayerDaoImpl implements PlayerDao {
 			
 		}
 	}
-
+	
+    //투수 입력받은 평자 보다 평자가 좋은 선수들에게 원래 급여 + 얼마를 줄지
 	@Override
-	public int update_pitcher(PlayerDto_pitcher player) throws ClassNotFoundException, SQLException {
-		String sql = "update pitcher set salary = slaray+? where avg <= ?";
+	public int update_pitcher(Pitcherplayer player) throws ClassNotFoundException, SQLException {
+		String sql = "update pitcher set salary = slaray+? where avg >= ?";
 		try(Connection conn = PlayerConn.getConn2021();
 			PreparedStatement pst = conn.prepareStatement(sql)){
 			
@@ -103,11 +95,12 @@ public class PlayerDaoImpl implements PlayerDao {
 			
 		}
 	}
-
+	
+    //연도별 타자 조회
 	@Override
-	public List<PlayerDto_batter>PlayerYears_batterFindAll(int ans) throws ClassNotFoundException, SQLException {
+	public List<Batterplayer>PlayerYears_batterFindAll(int ans) throws ClassNotFoundException, SQLException {
 		String sql = "select * from batter";
-		List<PlayerDto_batter> playList = new ArrayList<PlayerDto_batter>();
+		List<Batterplayer> playList = new ArrayList<Batterplayer>();
 		
 		if(ans == 2019) {
 			try(Connection conn = PlayerConn.getConn2019();
@@ -115,7 +108,7 @@ public class PlayerDaoImpl implements PlayerDao {
 					ResultSet rs = pst.executeQuery()){
 							
 				while(rs.next()) {
-					playList.add(new PlayerDto_batter(rs.getString("name"),
+					playList.add(new Batterplayer(rs.getString("name"),
 							rs.getInt("salary"),
 							rs.getInt("deposit"),
 							rs.getString("position"),
@@ -133,7 +126,7 @@ public class PlayerDaoImpl implements PlayerDao {
 					ResultSet rs = pst.executeQuery()){
 							
 				while(rs.next()) {
-					playList.add(new PlayerDto_batter(rs.getString("name"),
+					playList.add(new Batterplayer(rs.getString("name"),
 							rs.getInt("salary"),
 							rs.getInt("deposit"),
 							rs.getString("position"),
@@ -149,7 +142,7 @@ public class PlayerDaoImpl implements PlayerDao {
 					ResultSet rs = pst.executeQuery()){
 							
 				while(rs.next()) {
-					playList.add(new PlayerDto_batter(rs.getString("name"),
+					playList.add(new Batterplayer(rs.getString("name"),
 							rs.getInt("salary"),
 							rs.getInt("deposit"),
 							rs.getString("position"),
@@ -163,11 +156,11 @@ public class PlayerDaoImpl implements PlayerDao {
 		return playList;
 	
 	}
-
+    //연도별 투수조회
 	@Override
-	public List<PlayerDto_pitcher> PlayerYars_pitcherFindAll(int ans) throws ClassNotFoundException, SQLException {
+	public List<Pitcherplayer> PlayerYars_pitcherFindAll(int ans) throws ClassNotFoundException, SQLException {
 		String sql = "select * from batter";
-		List<PlayerDto_pitcher> playList = new ArrayList<PlayerDto_pitcher>();
+		List<Pitcherplayer> playList = new ArrayList<Pitcherplayer>();
 		
 		if(ans == 2019) {
 			try(Connection conn = PlayerConn.getConn2019();
@@ -175,7 +168,7 @@ public class PlayerDaoImpl implements PlayerDao {
 					ResultSet rs = pst.executeQuery()){
 							
 				while(rs.next()) {
-					playList.add(new PlayerDto_pitcher(rs.getString("name"),
+					playList.add(new Pitcherplayer(rs.getString("name"),
 							rs.getInt("salary"),
 							rs.getInt("deposit"),
 							rs.getString("position"),
@@ -195,7 +188,7 @@ public class PlayerDaoImpl implements PlayerDao {
 					ResultSet rs = pst.executeQuery()){
 							
 				while(rs.next()) {
-					playList.add(new PlayerDto_pitcher(rs.getString("name"),
+					playList.add(new Pitcherplayer(rs.getString("name"),
 							rs.getInt("salary"),
 							rs.getInt("deposit"),
 							rs.getString("position"),
@@ -214,7 +207,7 @@ public class PlayerDaoImpl implements PlayerDao {
 					ResultSet rs = pst.executeQuery()){
 							
 				while(rs.next()) {
-					playList.add(new PlayerDto_pitcher(rs.getString("name"),
+					playList.add(new Pitcherplayer(rs.getString("name"),
 							rs.getInt("salary"),
 							rs.getInt("deposit"),
 							rs.getString("position"),
@@ -233,5 +226,3 @@ public class PlayerDaoImpl implements PlayerDao {
 	}
 	
 }
-
-	
