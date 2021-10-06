@@ -1,3 +1,5 @@
+package BaseBall;
+
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -101,5 +103,135 @@ public class PlayerDaoImpl implements PlayerDao {
 			
 		}
 	}
+
+	@Override
+	public List<PlayerDto_batter>PlayerYears_batterFindAll(int ans) throws ClassNotFoundException, SQLException {
+		String sql = "select * from batter";
+		List<PlayerDto_batter> playList = new ArrayList<PlayerDto_batter>();
+		
+		if(ans == 2019) {
+			try(Connection conn = PlayerConn.getConn2019();
+					PreparedStatement pst = conn.prepareStatement(sql);
+					ResultSet rs = pst.executeQuery()){
+							
+				while(rs.next()) {
+					playList.add(new PlayerDto_batter(rs.getString("name"),
+							rs.getInt("salary"),
+							rs.getInt("deposit"),
+							rs.getString("position"),
+							rs.getInt("number"),
+							rs.getDouble("avg"),
+							rs.getInt("hr"),
+							rs.getInt("sb")));
+				}
+				
+			}
+			
+		}else if(ans == 2020) {
+			try(Connection conn = PlayerConn.getConn2020();
+					PreparedStatement pst = conn.prepareStatement(sql);
+					ResultSet rs = pst.executeQuery()){
+							
+				while(rs.next()) {
+					playList.add(new PlayerDto_batter(rs.getString("name"),
+							rs.getInt("salary"),
+							rs.getInt("deposit"),
+							rs.getString("position"),
+							rs.getInt("number"),
+							rs.getDouble("avg"),
+							rs.getInt("hr"),
+							rs.getInt("sb")));
+				}
+			}
+		}else if(ans == 2021) {
+			try(Connection conn = PlayerConn.getConn2021();
+					PreparedStatement pst = conn.prepareStatement(sql);
+					ResultSet rs = pst.executeQuery()){
+							
+				while(rs.next()) {
+					playList.add(new PlayerDto_batter(rs.getString("name"),
+							rs.getInt("salary"),
+							rs.getInt("deposit"),
+							rs.getString("position"),
+							rs.getInt("number"),
+							rs.getDouble("avg"),
+							rs.getInt("hr"),
+							rs.getInt("sb")));
+				}
+			}
+		}
+		return playList;
+	
+	}
+
+	@Override
+	public List<PlayerDto_pitcher> PlayerYars_pitcherFindAll(int ans) throws ClassNotFoundException, SQLException {
+		String sql = "select * from batter";
+		List<PlayerDto_pitcher> playList = new ArrayList<PlayerDto_pitcher>();
+		
+		if(ans == 2019) {
+			try(Connection conn = PlayerConn.getConn2019();
+					PreparedStatement pst = conn.prepareStatement(sql);
+					ResultSet rs = pst.executeQuery()){
+							
+				while(rs.next()) {
+					playList.add(new PlayerDto_pitcher(rs.getString("name"),
+							rs.getInt("salary"),
+							rs.getInt("deposit"),
+							rs.getString("position"),
+							rs.getInt("number"),
+							rs.getDouble("era"),
+							rs.getInt("phr"),
+							rs.getInt("win"),
+							rs.getInt("lose"),
+							rs.getInt("sv")));
+				}
+				
+			}
+			
+		}else if(ans == 2020) {
+			try(Connection conn = PlayerConn.getConn2020();
+					PreparedStatement pst = conn.prepareStatement(sql);
+					ResultSet rs = pst.executeQuery()){
+							
+				while(rs.next()) {
+					playList.add(new PlayerDto_pitcher(rs.getString("name"),
+							rs.getInt("salary"),
+							rs.getInt("deposit"),
+							rs.getString("position"),
+							rs.getInt("number"),
+							rs.getDouble("era"),
+							rs.getInt("phr"),
+							rs.getInt("win"),
+							rs.getInt("lose"),
+							rs.getInt("sv")));
+				}
+				
+			}
+		}else if(ans == 2021) {
+			try(Connection conn = PlayerConn.getConn2021();
+					PreparedStatement pst = conn.prepareStatement(sql);
+					ResultSet rs = pst.executeQuery()){
+							
+				while(rs.next()) {
+					playList.add(new PlayerDto_pitcher(rs.getString("name"),
+							rs.getInt("salary"),
+							rs.getInt("deposit"),
+							rs.getString("position"),
+							rs.getInt("number"),
+							rs.getDouble("era"),
+							rs.getInt("phr"),
+							rs.getInt("win"),
+							rs.getInt("lose"),
+							rs.getInt("sv")));
+				}
+				
+			}
+		}
+		return playList;
+	
+	}
+	
 }
+
 	
