@@ -7,7 +7,7 @@ import java.util.Scanner;
 import player.PlayerDao;
 import player.PlayerImp;
 
-public class SelectMain {
+public class MAIN2 {
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		SelectDao dao = SelectDaoImpl.getInstance();
@@ -18,7 +18,7 @@ public class SelectMain {
 			System.out.println("1. 컬럼을 기준으로 전체 선수 정보 조회하기");
 			System.out.println("2. 원하는 만큼선수정보 조회하기");
 			System.out.println("3. 선수의 연봉을 조회하기");
-			System.out.println("4.  종료");
+			System.out.println("4. 종료");
 			String select = scan.next();
 			
 			switch(select) {
@@ -32,14 +32,15 @@ public class SelectMain {
 				if(str.equals("타자")) {
 					String[] columns = {"avg", "hr", "sb"};
 					
-					System.out.println("기준이 될 컬럼을 선택해주세요");
+					System.out.println("기준이 될 컬럼을 번호로 선택해주세요");
+					System.out.println("avg-타율, hr-홈런, sb-도루");
 					for(int i =0; i<columns.length;i++) {
 						System.out.println(i+". "+columns[i]);
 					}
 					
 					int columnNum =scan.nextInt();
 					
-					System.out.println("정렬방식을 숫자로 선택하세요");
+					System.out.println("정렬방식을 번호로 선택하세요");
 					System.out.println("1.오름차순");
 					System.out.println("2.내림차순");
 					
@@ -61,14 +62,15 @@ public class SelectMain {
 				}if(str.equals("투수")) {
 					String[] columns = {"era", "phr", "win","lose","sv"};
 					
-					System.out.println("기준이 될 컬럼을 선택해주세요");
+					System.out.println("기준이 될 컬럼을 번호로 선택해주세요");
+					System.out.println("era-평균자책점, phr-피홈런, win-승, lose-패, sv-세이브");
 					for(int i =0; i<columns.length;i++) {
 						System.out.println(i+". "+columns[i]);
 					}
 					
 					int columnNum =scan.nextInt();
 					
-					System.out.println("정렬방식을 숫자로 선택하세요");
+					System.out.println("정렬방식을 번호로 선택하세요");
 					System.out.println("1.오름차순");
 					System.out.println("2.내림차순");
 					
@@ -100,14 +102,15 @@ public class SelectMain {
 					
 					String[] columns = {"avg", "hr", "sb"};
 					
-					System.out.println("조회할 기록을 선택하세요");
+					System.out.println("조회할 기록을 번호로 선택하세요");
+					System.out.println("avg-타율, hr-홈런, sb-도루");
 					for(int i =0; i<columns.length;i++) {
 						System.out.println(i+". "+columns[i]);
 					}
 					
 					int columnNum =scan.nextInt();
 					
-					System.out.println("정렬방식을 선택하세요");
+					System.out.println("정렬방식을 번호로 선택하세요");
 					System.out.println("1.오름차순");
 					System.out.println("2.내림차순");
 					
@@ -133,14 +136,15 @@ public class SelectMain {
 				}if(str2.equals("투수")){
 					String[] columns = {"era", "phr", "win","lose","sv"};
 					
-					System.out.println("조회할 기록을 선택하세요");
+					System.out.println("조회할 기록을 번호로 선택하세요");
+					System.out.println("era-평균자책점, phr-피홈런, win-승, lose-패, sv-세이브");
 					for(int i =0; i<columns.length;i++) {
 						System.out.println(i+". "+columns[i]);
 					}
 					
 					int columnNum =scan.nextInt();
 					
-					System.out.println("정렬방식을 선택하세요");
+					System.out.println("정렬방식을 번호로 선택하세요");
 					System.out.println("1.오름차순");
 					System.out.println("2.내림차순");
 					
@@ -215,7 +219,13 @@ public class SelectMain {
 				
 	
 			
-			
+			System.out.println();
+			System.out.println("더 조회 하시겠습니까?");
+			System.out.println("y or n");
+			String yn =scan.next();
+			if(yn.equals("n")) {
+				break;
+			}
 			
 			
 			

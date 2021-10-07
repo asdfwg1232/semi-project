@@ -25,20 +25,23 @@ public class MAIN {
 				if(position.equals("투수")) {
 					while(true) {
 
-						System.out.println("name, salary, depoist, number");
+						System.out.println("이름 입력");
 						String name = scan.next();
+						System.out.println("연봉 입력 (단위 : 만원)");
 						int salary = scan.nextInt();
+						System.out.println("계약금 입력 (단위 : 만원");
 						int deposit = scan.nextInt();
+						System.out.println("등번호 입력");
 						int number = scan.nextInt();
-						System.out.println("era입력");
+						System.out.println("평균자책점 입력");
 						double era = scan.nextDouble();
-						System.out.println(" phr");
+						System.out.println("피홈런 수 입력");
 						int phr = scan.nextInt();
-						System.out.println("win");
+						System.out.println("승 수 입력");
 						int win = scan.nextInt();
-						System.out.println("lose입력");
+						System.out.println("패 수 입력");
 						int lose = scan.nextInt();
-						System.out.println("sv 입력");
+						System.out.println("세이브 수 입력");
 						int sv = scan.nextInt();
 						
 						Pitcherplayer pitcher = new Pitcherplayer(name, salary, deposit, position, number, era, phr, win, lose, sv);
@@ -63,14 +66,19 @@ public class MAIN {
 				if(position.equals("타자")) {
 					
 					while(true) {
-						System.out.println("name, salary, depoist, number");
+						System.out.println("이름 입력");
 						String name1 = scan.next();
+						System.out.println("연봉 입력");
 						int salary1= scan.nextInt();
+						System.out.println("계약금 입력");
 						int deposit1 = scan.nextInt();
+						System.out.println("등번호 입력");
 						int number1 = scan.nextInt();
-						System.out.println("avg, hr, sb 입력");
+						System.out.println("타율 입력");
 						double avg = scan.nextDouble();
+						System.out.println("홈런 수 입력");
 						int hr = scan.nextInt();
+						System.out.println("도루 수 입력");
 						int sb = scan.nextInt();
 				
 						Batterplayer batter = new Batterplayer(name1, salary1, deposit1, position, number1, avg, hr, sb);
@@ -161,10 +169,13 @@ public class MAIN {
 
 					if(position2.equals("타자")) {
 						try {
-							System.out.println("수정하고싶은 avg,hr,sb의 값을 입력하세요");
+							System.out.println("수정할 타율을 입력하세요");
 							double avg1 = scan.nextDouble();
+							System.out.println("수정 할 홈런 수를 입력하세요");
 							int hr1 = scan.nextInt();
+							System.out.println("수정 할 도루 수를 입력하세요");
 							int sb1 = scan.nextInt();
+							
 							int result = dao.updateBatter(pname, avg1, hr1, sb1);
 
 							if(result>0) {
@@ -180,11 +191,15 @@ public class MAIN {
 					if(position2.equals("투수")) {
 
 						try {
-							System.out.println("수정하고싶은 era,phr,win,lose,sv 의 값을 입력하세요");
+							System.out.println("수정 할 평균자책점을 입력하세요");
 							double ear1 = scan.nextDouble();
+							System.out.println("수정 할 피홈런 수를 입력하세요");
 							int phr1 = scan.nextInt();
+							System.out.println("수정 할 승 수를 입력하세요");
 							int win1 = scan.nextInt();
+							System.out.println("수정 할 패 수를 입력하세요");
 							int lose1 = scan.nextInt();
+							System.out.println("수정 할 세이브 수를 입력하세요");
 							int sv1 = scan.nextInt();
 
 							int result1 = dao.Pitcherupdate(pname, ear1, phr1, win1, lose1, sv1);
@@ -218,7 +233,7 @@ public class MAIN {
 					double avg = scan.nextDouble();
 					
 					
-					System.out.println("기존연봉에 인상할 연봉을 적어주세요");
+					System.out.println("기존연봉에 인상할 연봉을 적어주세요 (단위:만원");
 					int salary = scan.nextInt();
 					
 					
@@ -242,7 +257,7 @@ public class MAIN {
 					double era = scan.nextDouble();
 					
 					
-					System.out.println("기존연봉에 인상할 연봉을 적어주세요");
+					System.out.println("기존연봉에 인상할 연봉을 적어주세요 (단위:만원)");
 					int salary = scan.nextInt();
 					
 
