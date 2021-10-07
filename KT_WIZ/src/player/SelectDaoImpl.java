@@ -123,13 +123,13 @@ public class SelectDaoImpl implements SelectDao{
 	
 	//타자 입력 받은 타율 보다 타율이 좋은 선수에 기본 급여에 + 얼마할지 
 		@Override
-		public int update_batter(Batterplayer player) throws ClassNotFoundException, SQLException {
+		public int update_batter(double avg, int sal) throws ClassNotFoundException, SQLException {
 			String sql = "update batter set salary = salary+? where avg >= ?";
 			try(Connection conn = PlayerConn.getConn2021();
 				PreparedStatement pst = conn.prepareStatement(sql)){
 				
-				pst.setInt(2, player.getSalary());
-				pst.setDouble(1, player.getAvg());
+				pst.setInt(1, sal);
+				pst.setDouble(2, avg);
 				
 				return pst.executeUpdate();
 				
@@ -138,13 +138,13 @@ public class SelectDaoImpl implements SelectDao{
 		
 	    //투수 입력받은 평자 보다 평자가 좋은 선수들에게 원래 급여 + 얼마를 줄지
 		@Override
-		public int update_pitcher(Pitcherplayer player) throws ClassNotFoundException, SQLException {
-			String sql = "update pitcher set salary = slaray+? where avg >= ?";
+		public int update_pitcher(double era, int sal) throws ClassNotFoundException, SQLException {
+			String sql = "update pitcher set salary = salary+? where era <= ?";
 			try(Connection conn = PlayerConn.getConn2021();
 				PreparedStatement pst = conn.prepareStatement(sql)){
 				
-				pst.setInt(1, player.getSalary());
-				pst.setDouble(2, player.getEra());
+				pst.setInt(1, sal);
+				pst.setDouble(2, era);
 				
 				return pst.executeUpdate();
 				

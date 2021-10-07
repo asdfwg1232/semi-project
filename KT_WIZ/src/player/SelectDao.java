@@ -24,10 +24,10 @@ public interface SelectDao {
 	public List<Batterplayer> bSalaryLimit() throws ClassNotFoundException, SQLException;
 	
 	//타자 연봉올리기
-	public int update_batter(Batterplayer player) throws ClassNotFoundException, SQLException;
+	public int update_batter(double avg, int salr) throws ClassNotFoundException, SQLException;
 		
 	//투수 연봉올리기
-	public int update_pitcher(Pitcherplayer player) throws ClassNotFoundException, SQLException;
+	public int update_pitcher(double era, int sal) throws ClassNotFoundException, SQLException;
 		
 	//년도별 타자 조회
 	public List<Batterplayer> PlayerYears_batterFindAll(int ans) throws ClassNotFoundException, SQLException;
