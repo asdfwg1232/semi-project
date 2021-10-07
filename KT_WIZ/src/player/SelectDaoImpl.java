@@ -89,8 +89,8 @@ public class SelectDaoImpl implements SelectDao{
 		}
 	}
 	@Override//투수 연봉 top 5명 조회
-	public List<Pitcherplayer> pSalaryLimit(String orderBy) throws ClassNotFoundException, SQLException {
-		String sql = "select * from pitcher order by salary "+orderBy+ " limit 5";
+	public List<Pitcherplayer> pSalaryLimit() throws ClassNotFoundException, SQLException {
+		String sql = "select * from pitcher order by salary desc limit 5";
 		try(Connection conn = PlayerConn.getConn2021();
 				Statement stmt =conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql)){
@@ -105,8 +105,8 @@ public class SelectDaoImpl implements SelectDao{
 		}
 	}
 	@Override//타자 연봉 top 10명 조회
-	public List<Batterplayer> bSalaryLimit(String orderBy) throws ClassNotFoundException, SQLException {
-		String sql = "select * from batter order by salary "+orderBy+" limit 10";
+	public List<Batterplayer> bSalaryLimit() throws ClassNotFoundException, SQLException {
+		String sql = "select * from batter order by salary desc limit 10";
 		try(Connection conn = PlayerConn.getConn2021();
 				Statement stmt =conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql)){

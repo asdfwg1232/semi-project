@@ -18,10 +18,10 @@ public interface SelectDao {
 	public List<Batterplayer> batterFindLimit(String columnName, String orderBy, int num) throws ClassNotFoundException, SQLException;
 	
 	//투수 연봉 top 5명 조회
-	public List<Pitcherplayer> pSalaryLimit(String orderBy) throws ClassNotFoundException, SQLException;
+	public List<Pitcherplayer> pSalaryLimit() throws ClassNotFoundException, SQLException;
 	
 	//타자 연봉 top 10명 조회
-	public List<Batterplayer> bSalaryLimit(String orderBy) throws ClassNotFoundException, SQLException;
+	public List<Batterplayer> bSalaryLimit() throws ClassNotFoundException, SQLException;
 	
 	//타자 연봉올리기
 	public int update_batter(Batterplayer player) throws ClassNotFoundException, SQLException;
