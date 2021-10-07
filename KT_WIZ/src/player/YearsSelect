@@ -1,0 +1,29 @@
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Scanner;
+
+public class Test {
+	public static void main(String[] args) {
+		PlayerDao dao = PlayerDaoImpl.getInstance();
+		Scanner scan = new Scanner(System.in);
+		
+		System.out.println("몇년도를 조회하실건가요? 2019 | 2020 | 2021");
+		int ans = scan.nextInt();
+		
+		try {
+			List<Batterplayer> playerList = dao.PlayerYears_batterFindAll(ans);
+			
+			for(Batterplayer player : playerList) {
+				System.out.println(player);
+			}
+		}catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+}
