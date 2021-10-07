@@ -279,5 +279,187 @@ public class SelectDaoImpl implements SelectDao{
 			return playList;
 		
 		}
+	//타자 test file 쓰기;
+		@Override
+	public void writeBatterplayerFile(String dir,String name,List<Batterplayer> playList)
+			throws IOException, ClassNotFoundException, SQLException {
+//		playList  = new ArrayList<Batterplayer>();
+		String sql = "select * from batter";
+		File outFile = new File(dir, name);
+			try(Connection conn = PlayerConn.getConn2021();
+				PreparedStatement pst = conn.prepareStatement(sql);
+				ResultSet rs = pst.executeQuery();
+				OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile))){
+				
+				File information = new File(dir);
+				
+	
+				if(!information.exists()) {
+					information.mkdir();
+				}
+				if(outFile.exists()) {
+					outFile.delete();
+				}
+				while(rs.next()) {
+					playList.add(new Batterplayer(rs.getString("name"),
+							rs.getInt("salary"),
+							rs.getInt("deposit"),
+							rs.getString("position"),
+							rs.getInt("number"),
+							rs.getDouble("avg"),
+							rs.getInt("hr"),
+							rs.getInt("sb")));
+				}
+//				out = new BufferedOutputStream(new FileOutputStream(outFile));
+				for(int idx = 0; idx < playList.size()-2; idx++) {
+					String writeStr = playList.get(idx).getName()+","+ playList.get(idx).getSalary()+","+
+				playList.get(idx).getDeposit()+","+playList.get(idx).getPosition()+","+playList.get(idx).getNumber()+","+
+							playList.get(idx).getAvg()+","+playList.get(idx).getHr()+","+playList.get(idx).getSb()+"\n";
+				
+				byte[] b = writeStr.getBytes();
+				
+				//파일에 해당 내용을 쓴다.
+				out.write(b);
+				}
+			}
+	}
+	//투수 test 파일에 쓰기
+	public void writePitcherplayerFile(String dir,String name,List<Pitcherplayer> playList)
+			throws IOException, ClassNotFoundException, SQLException {
+//		playList  = new ArrayList<Batterplayer>();
+		String sql = "select * from batter";
+		File outFile = new File(dir, name);
+			try(Connection conn = PlayerConn.getConn2021();
+				PreparedStatement pst = conn.prepareStatement(sql);
+				ResultSet rs = pst.executeQuery();
+				OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile))){
+				
+				File information = new File(dir);
+				
+	
+				if(!information.exists()) {
+					information.mkdir();
+				}
+				if(outFile.exists()) {
+					outFile.delete();
+				}
+				while(rs.next()) {
+					playList.add(new Pitcherplayer(rs.getString("name"),
+							rs.getInt("salary"),
+							rs.getInt("deposit"),
+							rs.getString("position"),
+							rs.getInt("number"),
+							rs.getDouble("era"),
+							rs.getInt("phr"),
+							rs.getInt("win"),
+							rs.getInt("lose"),
+							rs.getInt("sv")));
+				}
+//				out = new BufferedOutputStream(new FileOutputStream(outFile));
+				for(int idx = 0; idx < playList.size()-2; idx++) {
+					String writeStr = playList.get(idx).getName()+","+ playList.get(idx).getSalary()+","+
+				playList.get(idx).getDeposit()+","+playList.get(idx).getPosition()+","+playList.get(idx).getNumber()+","+
+							playList.get(idx).getEra()+","+playList.get(idx).getPhr()+","+playList.get(idx).getWin()+","+
+				playList.get(idx).getLose()+","+playList.get(idx).getSv()+"\n";
+				
+				byte[] b = writeStr.getBytes();
+				
+				//파일에 해당 내용을 쓴다.
+				out.write(b);
+				}
+			}
+	}
+	//test파일에 저장된 값들 읽어서 배열에 넣고 출력(타자)
+	@Override
+	public List<Batterplayer> readFile_batter(File file) throws IOException, ClassNotFoundException, SQLException {
+		List<Batterplayer> InfoList = new ArrayList<Batterplayer>();
+		FileReader filereader = null;
+		try{
+			filereader = new FileReader(file);
+			InfoList = readBatterplayerFile(filereader);
+		}finally {
+			if(filereader != null) {filereader.close();}
+			
+		} 
+		return InfoList;
+}	
+	
+        //test파일에 저장된 값 읽어서 배열에 넣고 출력(투수)
+	@Override
+	public List<Batterplayer> readBatterplayerFile(Reader input) throws ClassNotFoundException, IOException, SQLException {
+		try{
+			BufferedReader in = new BufferedReader(input);
+	        String line;
+	        
+			List<Batterplayer> InfoList = new ArrayList<Batterplayer>();
+		
+			
+			while((line = in.readLine()) != null) {
+				String[] writeStr = line.split(",");
+				
+				Batterplayer bp = new Batterplayer();
+				
+				bp.setName(writeStr[0]);
+				bp.setSalary(Integer.parseInt(writeStr[1]));
+				bp.setDeposit(Integer.parseInt(writeStr[2]));
+				bp.setPosition(writeStr[3]);
+				bp.setNumber(Integer.parseInt(writeStr[4]));
+				bp.setAvg(Double.parseDouble(writeStr[5]));
+				bp.setHr(Integer.parseInt(writeStr[6]));
+				bp.setSb(Integer.parseInt(writeStr[7]));
+				InfoList.add(bp);
+			}
+			return InfoList;
+		}finally {input.close();}
+	}
+ 
+        //test 파일에 저장된 값을 배열에 넣는 것 (투수)
+	@Override
+	public List<Pitcherplayer> readPitcherplayerFile(Reader input)
+			throws ClassNotFoundException, IOException, SQLException {
+		try{
+			BufferedReader in = new BufferedReader(input);
+	        String line;
+	        
+			List<Pitcherplayer> InfoList = new ArrayList<Pitcherplayer>();
+		
+			
+			while((line = in.readLine()) != null) {
+				String[] writeStr = line.split(",");
+				
+				Pitcherplayer pp = new Pitcherplayer();
+				
+				pp.setName(writeStr[0]);
+				pp.setSalary(Integer.parseInt(writeStr[1]));
+				pp.setDeposit(Integer.parseInt(writeStr[2]));
+				pp.setPosition(writeStr[3]);
+				pp.setNumber(Integer.parseInt(writeStr[4]));
+				pp.setEra(Double.parseDouble(writeStr[5]));
+				pp.setPhr(Integer.parseInt(writeStr[6]));
+				pp.setWin(Integer.parseInt(writeStr[7]));
+				pp.setLose(Integer.parseInt(writeStr[8]));
+				pp.setSv(Integer.parseInt(writeStr[9]));
+				InfoList.add(pp);
+			}
+			return InfoList;
+		}finally {input.close();}
+	} 
+     
+        //테스트에 저장된 값 배열에 넣기 투수
+	@Override
+	public List<Pitcherplayer> readFile_pitcher(File file) throws IOException, ClassNotFoundException, SQLException {
+		List<Pitcherplayer> InfoList = new ArrayList<Pitcherplayer>();
+		FileReader filereader = null;
+		try{
+			filereader = new FileReader(file);
+			InfoList =  readPitcherplayerFile(filereader);
+		}finally {
+			if(filereader != null) {filereader.close();}
+			
+		} 
+		return InfoList;
+	
+	}
+}
 
 }
