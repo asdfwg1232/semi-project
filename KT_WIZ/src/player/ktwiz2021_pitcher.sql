@@ -24,8 +24,8 @@ DROP TABLE IF EXISTS `pitcher`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pitcher` (
   `name` varchar(45) NOT NULL,
-  `salary` int NOT NULL,
-  `deposit` int NOT NULL,
+  `salary(단위:만원)` int NOT NULL,
+  `deposit(단위:만원)` int NOT NULL,
   `position` varchar(45) NOT NULL,
   `number` int NOT NULL,
   `era` double NOT NULL,
