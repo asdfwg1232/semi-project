@@ -10,10 +10,23 @@ import java.util.List;
 
 
 public class SelectDaoImpl implements SelectDao{
-	
 	private static SelectDaoImpl instance = new SelectDaoImpl();
-	private SelectDaoImpl() {}
-	public static SelectDaoImpl getInstance() {return instance;}
+	public SelectDaoImpl () {};
+	
+	public List<Batterplayer> infoList_batter = new ArrayList<Batterplayer>();
+	public List<Pitcherplayer> infoList_pitcher = new ArrayList<Pitcherplayer>();
+	
+	public void setInfoList_Batter(List<Batterplayer> InfoList_batter) {
+		this.infoList_batter = InfoList_batter;
+	}
+	public void setInfoList_pitcher(List<Pitcherplayer> InfoList_pitcher) {
+		this.infoList_pitcher = InfoList_pitcher;
+	}
+	
+	
+	public static SelectDaoImpl getInstance() {
+		return instance;
+	}
 
 	@Override//투수 컬럼으로 조회
 	//name, salary, deposit, position, number, era, phr, win, lose, sv
@@ -256,31 +269,31 @@ public class SelectDaoImpl implements SelectDao{
 					}
 					
 				}
-			}else if(ans == 2021) {
-				try(Connection conn = PlayerConn.getConn2021();
-						PreparedStatement pst = conn.prepareStatement(sql);
-						ResultSet rs = pst.executeQuery()){
-								
-					while(rs.next()) {
-						playList.add(new Pitcherplayer(rs.getString("name"),
-								rs.getInt("salary"),
-								rs.getInt("deposit"),
-								rs.getString("position"),
-								rs.getInt("number"),
-								rs.getDouble("era"),
-								rs.getInt("phr"),
-								rs.getInt("win"),
-								rs.getInt("lose"),
-								rs.getInt("sv")));
-					}
-					
+		}else if(ans == 2021) {
+			try(Connection conn = PlayerConn.getConn2021();
+					PreparedStatement pst = conn.prepareStatement(sql);
+					ResultSet rs = pst.executeQuery()){
+							
+				while(rs.next()) {
+					playList.add(new Pitcherplayer(rs.getString("name"),
+							rs.getInt("salary"),
+							rs.getInt("deposit"),
+							rs.getString("position"),
+							rs.getInt("number"),
+							rs.getDouble("era"),
+							rs.getInt("phr"),
+							rs.getInt("win"),
+							rs.getInt("lose"),
+							rs.getInt("sv")));
 				}
+				
 			}
-			return playList;
-		
 		}
-	//타자 test file 쓰기;
-		@Override
+		return playList;
+	
+	}
+
+	@Override
 	public void writeBatterplayerFile(String dir,String name,List<Batterplayer> playList)
 			throws IOException, ClassNotFoundException, SQLException {
 //		playList  = new ArrayList<Batterplayer>();
@@ -323,11 +336,11 @@ public class SelectDaoImpl implements SelectDao{
 				}
 			}
 	}
-	//투수 test 파일에 쓰기
+	
 	public void writePitcherplayerFile(String dir,String name,List<Pitcherplayer> playList)
 			throws IOException, ClassNotFoundException, SQLException {
 //		playList  = new ArrayList<Batterplayer>();
-		String sql = "select * from batter";
+		String sql = "select * from pitcher";
 		File outFile = new File(dir, name);
 			try(Connection conn = PlayerConn.getConn2021();
 				PreparedStatement pst = conn.prepareStatement(sql);
@@ -369,7 +382,6 @@ public class SelectDaoImpl implements SelectDao{
 				}
 			}
 	}
-	//test파일에 저장된 값들 읽어서 배열에 넣고 출력(타자)
 	@Override
 	public List<Batterplayer> readFile_batter(File file) throws IOException, ClassNotFoundException, SQLException {
 		List<Batterplayer> InfoList = new ArrayList<Batterplayer>();
@@ -384,7 +396,7 @@ public class SelectDaoImpl implements SelectDao{
 		return InfoList;
 }	
 	
-        //test파일에 저장된 값 읽어서 배열에 넣고 출력(투수)
+
 	@Override
 	public List<Batterplayer> readBatterplayerFile(Reader input) throws ClassNotFoundException, IOException, SQLException {
 		try{
@@ -412,8 +424,22 @@ public class SelectDaoImpl implements SelectDao{
 			return InfoList;
 		}finally {input.close();}
 	}
- 
-        //test 파일에 저장된 값을 배열에 넣는 것 (투수)
+
+	@Override
+	public List<Pitcherplayer> readFile_pitcher(File file) throws IOException, ClassNotFoundException, SQLException {
+		List<Pitcherplayer> InfoList = new ArrayList<Pitcherplayer>();
+		FileReader filereader = null;
+		try{
+			filereader = new FileReader(file);
+			InfoList =  readPitcherplayerFile(filereader);
+		}finally {
+			if(filereader != null) {filereader.close();}
+			
+		} 
+		return InfoList;
+		
+	}
+
 	@Override
 	public List<Pitcherplayer> readPitcherplayerFile(Reader input)
 			throws ClassNotFoundException, IOException, SQLException {
@@ -443,23 +469,7 @@ public class SelectDaoImpl implements SelectDao{
 			}
 			return InfoList;
 		}finally {input.close();}
-	} 
-     
-        //테스트에 저장된 값 배열에 넣기 투수
-	@Override
-	public List<Pitcherplayer> readFile_pitcher(File file) throws IOException, ClassNotFoundException, SQLException {
-		List<Pitcherplayer> InfoList = new ArrayList<Pitcherplayer>();
-		FileReader filereader = null;
-		try{
-			filereader = new FileReader(file);
-			InfoList =  readPitcherplayerFile(filereader);
-		}finally {
-			if(filereader != null) {filereader.close();}
-			
-		} 
-		return InfoList;
-	
 	}
-}
+
 
 }
