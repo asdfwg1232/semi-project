@@ -24,8 +24,8 @@ DROP TABLE IF EXISTS `batter`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `batter` (
   `name` varchar(45) NOT NULL,
-  `salary(단위:만원)` int NOT NULL,
-  `deposit(단위:만원)` int NOT NULL,
+  `salary` int NOT NULL,
+  `deposit` int NOT NULL,
   `position` varchar(45) NOT NULL,
   `number` int NOT NULL,
   `avg` double NOT NULL,
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-06 10:46:22
+-- Dump completed on 2021-10-07 18:09:41
