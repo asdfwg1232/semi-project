@@ -34,6 +34,24 @@ public interface SelectDao {
 		
 	//년도별 투수 조회
 	public List<Pitcherplayer> PlayerYars_pitcherFindAll(int ans) throws ClassNotFoundException, SQLException;
-		
 	
+	public void writeBatterplayerFile(String dir,String name,List<Batterplayer> playList) throws IOException, ClassNotFoundException, SQLException;
+	
+	public void writePitcherplayerFile(String dir, String name, List<Pitcherplayer> playList) throws IOException, ClassNotFoundException, SQLException;
+	
+	//투수 타자 메모장에 쓰기
+	public void writeBatterplayerFile(String dir,String name,List<Batterplayer> playList) throws IOException, ClassNotFoundException, SQLException;
+	
+	public void writePitcherplayerFile(String dir, String name, List<Pitcherplayer> playList) throws IOException, ClassNotFoundException, SQLException;
+	
+	//투수 타자 파일의 있는 값 읽기
+	public List<Batterplayer> readBatterplayerFile(Reader input) throws ClassNotFoundException, IOException, SQLException;
+	
+	public List<Batterplayer> readFile_batter(File file) throws IOException, ClassNotFoundException, SQLException;
+	
+        public List<Pitcherplayer> readPitcherplayerFile(Reader input) throws ClassNotFoundException, IOException, SQLException;
+	
+	public List<Pitcherplayer> readFile_pitcher(File file) throws IOException, ClassNotFoundException, SQLException;
+	
+
 }
