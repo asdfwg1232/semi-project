@@ -44,7 +44,7 @@ public interface SelectDao {
 	
 	public void writePitcherplayerFile(String dir, String name, List<Pitcherplayer> playList) throws IOException, ClassNotFoundException, SQLException;
 	
-	//투수 타자 파일의 있는 값 읽기
+	//투수 타자 test 파일 값 읽기
 	public List<Batterplayer> readBatterplayerFile(Reader input) throws ClassNotFoundException, IOException, SQLException;
 	
 	public List<Batterplayer> readFile_batter(File file) throws IOException, ClassNotFoundException, SQLException;
