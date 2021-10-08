@@ -1,6 +1,10 @@
 package player;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface PlayerDao {
 	
@@ -25,4 +29,24 @@ public interface PlayerDao {
 
 	//투수 연봉올리기
 	public int update_pitcher(double era, int sal) throws ClassNotFoundException, SQLException;
+	
+	//투수 타자 메모장에 쓰기
+	public void writeBatterplayerFile(String dir,String name,List<Batterplayer> playList) throws IOException, ClassNotFoundException, SQLException;
+	
+	public void writePitcherplayerFile(String dir, String name, List<Pitcherplayer> playList) throws IOException, ClassNotFoundException, SQLException;
+	
+	//투수 타자 쓰기
+	public List<Batterplayer> readBatterplayerFile(Reader input) throws ClassNotFoundException, IOException, SQLException;
+	
+	public List<Batterplayer> readFile_batter(File file) throws IOException, ClassNotFoundException, SQLException;
+	
+        public List<Pitcherplayer> readPitcherplayerFile(Reader input) throws ClassNotFoundException, IOException, SQLException;
+	
+	public List<Pitcherplayer> readFile_pitcher(File file) throws IOException, ClassNotFoundException, SQLException;
+	
+	//타자 조회, 투수 조회
+	public List<Batterplayer> PlayerYears_batterFindAll() throws ClassNotFoundException, SQLException;
+	
+        public List<Pitcherplayer> PlayerYars_pitcherFindAll() throws ClassNotFoundException, SQLException;
+
 }
