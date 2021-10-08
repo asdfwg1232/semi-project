@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-
+//jre 바
 public class Main1 {
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
