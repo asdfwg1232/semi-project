@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Main1 {
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		PlayerDao dao = PlayerImp.getInstance();
+		PlayerDao dao = PlayerImp.getInst();
 	
 		
 		while(true) {
