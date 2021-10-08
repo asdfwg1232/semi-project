@@ -6,6 +6,7 @@ import java.io.Reader;
 import java.sql.SQLException;
 import java.util.List;
 
+//jre 버전 16
 public interface PlayerDao {
 	
 //	선수 정보를 입력하는 input 
