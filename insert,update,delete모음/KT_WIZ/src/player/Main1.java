@@ -274,19 +274,20 @@ public class Main1 {
 				
 				
 				
+						//ㅣㅣ	
 			case "5" :	
 				
 				System.out.println("타자 or 투수 중 어느걸 파일에 저장할지 골라주세요.");
 				String str5 = scan.next();
 				System.out.println("선수정보를 저장하실 파일명을 입력해주세요.");
 				String filename = scan.next();
-				String filepath = "c:\\test\\";
+				String filepath = "c:\\player\\";
 				if(str5.equals("타자")) {
 					try {
 						List<Batterplayer> playerList = dao.PlayerYears_batterFindAll();
 						for(Batterplayer player : playerList) {
+							dao.writeBatterplayerFile(filepath, filename, playerList);
 						}
-						dao.writeBatterplayerFile(filepath, filename, playerList);
 						System.out.println("타자 관련 파일을 작성 완료했습니다.");
 					}catch(ClassNotFoundException e) {
 						e.printStackTrace();
@@ -319,7 +320,7 @@ public class Main1 {
 				Pitcherplayer pp = new Pitcherplayer();
 				System.out.println("선수정보가 저장된 파일명을 입력해주세요.");
 				String filename1 = scan.next();
-				String filepath1 = "c:\\test\\";
+				String filepath1 = "c:\\player\\";
 				
     			System.out.println("해당 파일이 타자 or 투수 관련 파일인가요?");
 				String ans = scan.next();
