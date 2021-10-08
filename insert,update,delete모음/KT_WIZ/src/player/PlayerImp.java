@@ -31,8 +31,8 @@ public class PlayerImp implements PlayerDao{
 	}
 	
 	
-	public static PlayerImp getInstance() {
-		return instance;
+	public static PlayerImp getInst() {
+	        return instance;
 	}
 	
    //insert pitcher
