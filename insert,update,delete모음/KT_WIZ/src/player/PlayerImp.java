@@ -1,21 +1,38 @@
 package player;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerImp implements PlayerDao{
 
-	public static PlayerImp instance = new PlayerImp();
-
-	//생성자
-
-	private PlayerImp() {}
-
-	public static PlayerImp getInst() {
-		return instance ;
+	private static PlayerImp instance = new PlayerImp();
+	public PlayerImp() {};
+	
+	public List<Batterplayer> infoList_batter = new ArrayList<Batterplayer>();
+	public List<Pitcherplayer> infoList_pitcher = new ArrayList<Pitcherplayer>();
+	
+	public void setInfoList_Batter(List<Batterplayer> InfoList_batter) {
+		this.infoList_batter = InfoList_batter;
+	}
+	public void setInfoList_pitcher(List<Pitcherplayer> InfoList_pitcher) {
+		this.infoList_pitcher = InfoList_pitcher;
+	}
+	
+	
+	public static PlayerImp getInstance() {
+		return instance;
 	}
 	
    //insert pitcher
@@ -163,8 +180,230 @@ public class PlayerImp implements PlayerDao{
 					
 				}
 			}
+			
+			@Override
+			public void writeBatterplayerFile(String dir,String name,List<Batterplayer> playList)
+					throws IOException, ClassNotFoundException, SQLException {
+//				playList  = new ArrayList<Batterplayer>();
+				String sql = "select * from batter";
+				File outFile = new File(dir, name);
+					try(Connection conn = PlayerConn.getConn2021();
+						PreparedStatement pst = conn.prepareStatement(sql);
+						ResultSet rs = pst.executeQuery();
+						OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile))){
+						
+						File information = new File(dir);
+						
+			
+						if(!information.exists()) {
+							information.mkdir();
+						}
+						if(outFile.exists()) {
+							outFile.delete();
+						}
+						while(rs.next()) {
+							playList.add(new Batterplayer(rs.getString("name"),
+									rs.getInt("salary"),
+									rs.getInt("deposit"),
+									rs.getString("position"),
+									rs.getInt("number"),
+									rs.getDouble("avg"),
+									rs.getInt("hr"),
+									rs.getInt("sb")));
+						}
+//						out = new BufferedOutputStream(new FileOutputStream(outFile));
+						for(int idx = 0; idx < playList.size()-2; idx++) {
+							String writeStr = playList.get(idx).getName()+","+ playList.get(idx).getSalary()+","+
+						playList.get(idx).getDeposit()+","+playList.get(idx).getPosition()+","+playList.get(idx).getNumber()+","+
+									playList.get(idx).getAvg()+","+playList.get(idx).getHr()+","+playList.get(idx).getSb()+"\n";
+						
+						byte[] b = writeStr.getBytes();
+						
+						//파일에 해당 내용을 쓴다.
+						out.write(b);
+						}
+					}
+			}
+			
+			public void writePitcherplayerFile(String dir,String name,List<Pitcherplayer> playList)
+					throws IOException, ClassNotFoundException, SQLException {
+//				playList  = new ArrayList<Batterplayer>();
+				String sql = "select * from pitcher";
+				File outFile = new File(dir, name);
+					try(Connection conn = PlayerConn.getConn2021();
+						PreparedStatement pst = conn.prepareStatement(sql);
+						ResultSet rs = pst.executeQuery();
+						OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile))){
+						
+						File information = new File(dir);
+						
+			
+						if(!information.exists()) {
+							information.mkdir();
+						}
+						if(outFile.exists()) {
+							outFile.delete();
+						}
+						while(rs.next()) {
+							playList.add(new Pitcherplayer(rs.getString("name"),
+									rs.getInt("salary"),
+									rs.getInt("deposit"),
+									rs.getString("position"),
+									rs.getInt("number"),
+									rs.getDouble("era"),
+									rs.getInt("phr"),
+									rs.getInt("win"),
+									rs.getInt("lose"),
+									rs.getInt("sv")));
+						}
+//						out = new BufferedOutputStream(new FileOutputStream(outFile));
+						for(int idx = 0; idx < playList.size()-2; idx++) {
+							String writeStr = playList.get(idx).getName()+","+ playList.get(idx).getSalary()+","+
+						playList.get(idx).getDeposit()+","+playList.get(idx).getPosition()+","+playList.get(idx).getNumber()+","+
+									playList.get(idx).getEra()+","+playList.get(idx).getPhr()+","+playList.get(idx).getWin()+","+
+						playList.get(idx).getLose()+","+playList.get(idx).getSv()+"\n";
+						
+						byte[] b = writeStr.getBytes();
+						
+						//파일에 해당 내용을 쓴다.
+						out.write(b);
+						}
+					}
+			}
+			@Override
+			public List<Batterplayer> readFile_batter(File file) throws IOException, ClassNotFoundException, SQLException {
+				List<Batterplayer> InfoList = new ArrayList<Batterplayer>();
+				FileReader filereader = null;
+				try{
+					filereader = new FileReader(file);
+					InfoList = readBatterplayerFile(filereader);
+				}finally {
+					if(filereader != null) {filereader.close();}
+					
+				} 
+				return InfoList;
+		}	
+			
 
+			@Override
+			public List<Batterplayer> readBatterplayerFile(Reader input) throws ClassNotFoundException, IOException, SQLException {
+				try{
+					BufferedReader in = new BufferedReader(input);
+			        String line;
+			        
+					List<Batterplayer> InfoList = new ArrayList<Batterplayer>();
+				
+					
+					while((line = in.readLine()) != null) {
+						String[] writeStr = line.split(",");
+						
+						Batterplayer bp = new Batterplayer();
+						
+						bp.setName(writeStr[0]);
+						bp.setSalary(Integer.parseInt(writeStr[1]));
+						bp.setDeposit(Integer.parseInt(writeStr[2]));
+						bp.setPosition(writeStr[3]);
+						bp.setNumber(Integer.parseInt(writeStr[4]));
+						bp.setAvg(Double.parseDouble(writeStr[5]));
+						bp.setHr(Integer.parseInt(writeStr[6]));
+						bp.setSb(Integer.parseInt(writeStr[7]));
+						InfoList.add(bp);
+					}
+					return InfoList;
+				}finally {input.close();}
+			}
 
-	
+			@Override
+			public List<Pitcherplayer> readFile_pitcher(File file) throws IOException, ClassNotFoundException, SQLException {
+				List<Pitcherplayer> InfoList = new ArrayList<Pitcherplayer>();
+				FileReader filereader = null;
+				try{
+					filereader = new FileReader(file);
+					InfoList =  readPitcherplayerFile(filereader);
+				}finally {
+					if(filereader != null) {filereader.close();}
+					
+				} 
+				return InfoList;
+				
+			}
 
+			@Override
+			public List<Pitcherplayer> readPitcherplayerFile(Reader input)
+					throws ClassNotFoundException, IOException, SQLException {
+				try{
+					BufferedReader in = new BufferedReader(input);
+			        String line;
+			        
+					List<Pitcherplayer> InfoList = new ArrayList<Pitcherplayer>();
+				
+					
+					while((line = in.readLine()) != null) {
+						String[] writeStr = line.split(",");
+						
+						Pitcherplayer pp = new Pitcherplayer();
+						
+						pp.setName(writeStr[0]);
+						pp.setSalary(Integer.parseInt(writeStr[1]));
+						pp.setDeposit(Integer.parseInt(writeStr[2]));
+						pp.setPosition(writeStr[3]);
+						pp.setNumber(Integer.parseInt(writeStr[4]));
+						pp.setEra(Double.parseDouble(writeStr[5]));
+						pp.setPhr(Integer.parseInt(writeStr[6]));
+						pp.setWin(Integer.parseInt(writeStr[7]));
+						pp.setLose(Integer.parseInt(writeStr[8]));
+						pp.setSv(Integer.parseInt(writeStr[9]));
+						InfoList.add(pp);
+					}
+					return InfoList;
+				}finally {input.close();}
+			}
+
+			//타자 조회
+			public List<Batterplayer>PlayerYears_batterFindAll() throws ClassNotFoundException, SQLException {
+				String sql = "select * from batter";
+				List<Batterplayer> playList = new ArrayList<Batterplayer>();
+					try(Connection conn = PlayerConn.getConn2021();
+							PreparedStatement pst = conn.prepareStatement(sql);
+							ResultSet rs = pst.executeQuery()){
+									
+						while(rs.next()) {
+							playList.add(new Batterplayer(rs.getString("name"),
+									rs.getInt("salary"),
+									rs.getInt("deposit"),
+									rs.getString("position"),
+									rs.getInt("number"),
+									rs.getDouble("avg"),
+									rs.getInt("hr"),
+									rs.getInt("sb")));
+						}
+						
+					}
+					return playList;
+			}
+		    //투수조회
+			@Override
+			public List<Pitcherplayer> PlayerYars_pitcherFindAll() throws ClassNotFoundException, SQLException {
+				String sql = "select * from pitcher";
+				List<Pitcherplayer> playList = new ArrayList<Pitcherplayer>();
+					try(Connection conn = PlayerConn.getConn2021();
+							PreparedStatement pst = conn.prepareStatement(sql);
+							ResultSet rs = pst.executeQuery()){
+									
+						while(rs.next()) {
+							playList.add(new Pitcherplayer(rs.getString("name"),
+									rs.getInt("salary"),
+									rs.getInt("deposit"),
+									rs.getString("position"),
+									rs.getInt("number"),
+									rs.getDouble("era"),
+									rs.getInt("phr"),
+									rs.getInt("win"),
+									rs.getInt("lose"),
+									rs.getInt("sv")));
+						}
+						
+					}
+					return playList;
+				}
 }
